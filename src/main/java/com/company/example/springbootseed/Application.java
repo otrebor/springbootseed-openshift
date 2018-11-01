@@ -16,7 +16,8 @@ public class Application {
     Logger logger = LoggerFactory.getLogger(Application.class);
 
     public static void main(String[] args) {
-        SpringApplication.run(Application.class, args);
+        Class[] sources = {Application.class, ServletInitializer.class};
+        SpringApplication.run(sources, args);
     }
 
     /* It retrieves all the beans that were created either by your app or were automatically added thanks to Spring Boot. It sorts them and prints them out. */
