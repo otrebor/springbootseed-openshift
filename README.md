@@ -1,0 +1,2 @@
+# springbootseed-openshift
+
