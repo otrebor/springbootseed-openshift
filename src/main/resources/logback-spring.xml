@@ -51,7 +51,7 @@
 
     <springProfile name="!local">
         <!-- in other environments we log everything at info level -->
-        <root level="info">
+        <root level="debug">
             <appender-ref ref="RollingFile" />
             <appender-ref ref="Console" />
         </root>
