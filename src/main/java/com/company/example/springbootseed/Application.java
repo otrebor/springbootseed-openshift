@@ -31,6 +31,7 @@ public class Application extends SpringBootServletInitializer {
     @Override
     protected SpringApplicationBuilder configure(SpringApplicationBuilder application) {
         // Customize the application or call application.sources(...) to add sources
+        logger.info("Servlet Initialization configuration executed");
         return application.sources(Application.class);
     }
 
