@@ -2,6 +2,7 @@ package com.company.example.springbootseed.domain;
 
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
+import lombok.EqualsAndHashCode;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.PropertySource;
 
@@ -10,6 +11,7 @@ import javax.validation.constraints.*;
 @Configuration // needed to access configuration files
 @PropertySource("classpath:documentation/apidocumentation.domain.properties")// adds property files to set of properties files already loaded
 @ApiModel(description = "Class representing a person tracked by the application.") // placeholders not yet supported in this annotation
+@EqualsAndHashCode
 public class Person {
 
     // position helps in specifying the order of parameters in documentation

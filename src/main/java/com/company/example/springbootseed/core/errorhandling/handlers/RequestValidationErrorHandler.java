@@ -1,8 +1,8 @@
-package com.company.example.springbootseed.errorhandling.handlers;
+package com.company.example.springbootseed.core.errorhandling.handlers;
 
-import com.company.example.springbootseed.errorhandling.domain.ApiError;
-import com.company.example.springbootseed.errorhandling.utilities.IHttpMessageNotReadableExceptionToApiErrorConverter;
-import com.company.example.springbootseed.errorhandling.utilities.IMethodArgumentNotValidExceptionToApiErrorConverter;
+import com.company.example.springbootseed.core.errorhandling.domain.ApiError;
+import com.company.example.springbootseed.core.errorhandling.utilities.IHttpMessageNotReadableExceptionToApiErrorConverter;
+import com.company.example.springbootseed.core.errorhandling.utilities.IMethodArgumentNotValidExceptionToApiErrorConverter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.Ordered;
 import org.springframework.core.annotation.Order;

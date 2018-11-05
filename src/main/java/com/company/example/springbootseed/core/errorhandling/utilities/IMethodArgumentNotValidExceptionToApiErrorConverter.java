@@ -1,4 +1,4 @@
-package com.company.example.springbootseed.errorhandling.utilities;
+package com.company.example.springbootseed.core.errorhandling.utilities;
 
 import org.springframework.web.bind.MethodArgumentNotValidException;
 

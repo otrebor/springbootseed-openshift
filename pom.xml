@@ -111,12 +111,12 @@
             <scope>runtime</scope>
         </dependency>
 
-        <!--embedded tomcat server-->
-        <dependency>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-tomcat</artifactId>
-            <scope>provided</scope>
-        </dependency>
+        <!--&lt;!&ndash;embedded tomcat server&ndash;&gt;-->
+        <!--<dependency>-->
+            <!--<groupId>org.springframework.boot</groupId>-->
+            <!--<artifactId>spring-boot-starter-tomcat</artifactId>-->
+            <!--<scope>provided</scope>-->
+        <!--</dependency>-->
 
         <dependency>
             <groupId>org.springframework.boot</groupId>
@@ -228,6 +228,15 @@
                     </execution>
                 </executions>
 
+            </plugin>
+
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-surefire-plugin</artifactId>
+                <configuration>
+                    <!-- this dependency is only needed to fix a bug in open jdk 8 (test)-->
+                    <useSystemClassLoader>false</useSystemClassLoader>
+                </configuration>
             </plugin>
 
         </plugins>

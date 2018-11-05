@@ -1,6 +1,5 @@
-package com.company.example.springbootseed.errorhandling.domain;
+package com.company.example.springbootseed.core.errorhandling.domain;
 
-import com.company.example.springbootseed.errorhandling.domain.ApiSubError;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.EqualsAndHashCode;

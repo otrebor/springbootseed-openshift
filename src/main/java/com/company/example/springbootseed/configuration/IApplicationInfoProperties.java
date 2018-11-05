@@ -1,8 +1,10 @@
 package com.company.example.springbootseed.configuration;
 
+import com.company.example.springbootseed.core.domain.Environment;
+
 public interface IApplicationInfoProperties {
     String getName();
-    String getEnvironment();
+    Environment getEnvironment();
     String getTitle();
     String getDescription() ;
     String getVersion();

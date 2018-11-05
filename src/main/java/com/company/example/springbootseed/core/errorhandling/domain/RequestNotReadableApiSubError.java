@@ -1,4 +1,4 @@
-package com.company.example.springbootseed.errorhandling.domain;
+package com.company.example.springbootseed.core.errorhandling.domain;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;

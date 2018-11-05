@@ -1,9 +1,9 @@
-package com.company.example.springbootseed.errorhandling.utilities.implementation;
+package com.company.example.springbootseed.core.errorhandling.utilities.implementation;
 
-import com.company.example.springbootseed.errorhandling.domain.ApiError;
-import com.company.example.springbootseed.errorhandling.domain.ApiSubError;
-import com.company.example.springbootseed.errorhandling.domain.RequestValidationApiSubError;
-import com.company.example.springbootseed.errorhandling.utilities.IMethodArgumentNotValidExceptionToApiErrorConverter;
+import com.company.example.springbootseed.core.errorhandling.domain.ApiError;
+import com.company.example.springbootseed.core.errorhandling.domain.ApiSubError;
+import com.company.example.springbootseed.core.errorhandling.domain.RequestValidationApiSubError;
+import com.company.example.springbootseed.core.errorhandling.utilities.IMethodArgumentNotValidExceptionToApiErrorConverter;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.PropertySource;

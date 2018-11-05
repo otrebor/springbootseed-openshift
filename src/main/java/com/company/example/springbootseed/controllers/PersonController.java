@@ -4,6 +4,7 @@ import com.company.example.springbootseed.controllers.annotations.MethodWith201;
 import com.company.example.springbootseed.domain.Person;
 import com.company.example.springbootseed.services.PersonService;
 import io.swagger.annotations.*;
+import lombok.EqualsAndHashCode;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.PropertySource;
@@ -21,6 +22,7 @@ import java.util.List;
 @ApiResponses(value = {
         @ApiResponse(code = 400, message = "Malformed request") // valid for all
 })
+@EqualsAndHashCode // generates equals and hash code
 public class PersonController {
 
     private PersonService personService;

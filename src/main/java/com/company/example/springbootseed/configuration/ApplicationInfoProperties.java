@@ -1,142 +1,36 @@
 package com.company.example.springbootseed.configuration;
 
+import com.company.example.springbootseed.core.domain.Environment;
+import lombok.Getter;
+import lombok.Setter;
+import lombok.ToString;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.stereotype.Component;
+import org.springframework.validation.annotation.Validated;
+
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
 
 @Component
 @ConfigurationProperties("app.info")
+@Validated //enables validation of fields - https://docs.spring.io/spring-boot/docs/current/reference/html/boot-features-external-config.html
+@ToString // automatically generates toString
 public class ApplicationInfoProperties implements IApplicationInfoProperties {
 
-    private String name;
-    private String environment;
-    private String title;
-    private String description;
-    private String version;
-    private String termsOfServiceUrl;
-    private String contactName;
-    private String contactUrl;
-    private String contactEmail;
-    private String licence;
-    private String licenceUrl;
+    @Getter @Setter @NotNull @NotBlank private String name;
+    @Getter @NotNull private Environment environment;
 
-    public String getEnvironment() {
-        return environment;
-    }
+    @Getter @Setter @NotNull @NotBlank private String title;
+    @Getter @Setter @NotNull @NotBlank private String description;
+    @Getter @Setter @NotNull @NotBlank private String version;
+    @Getter @Setter @NotNull @NotBlank private String termsOfServiceUrl;
+    @Getter @Setter @NotNull @NotBlank private String contactName;
+    @Getter @Setter @NotNull @NotBlank private String contactUrl;
+    @Getter @Setter @NotNull @NotBlank private String contactEmail;
+    @Getter @Setter @NotNull @NotBlank private String licence;
+    @Getter @Setter @NotNull @NotBlank private String licenceUrl;
 
     public void setEnvironment(String environment) {
-        checkRequiredString(environment);
-        this.environment = environment;
-    }
-
-    public String getTitle() {
-        return title;
-    }
-
-    public void setTitle(String title) {
-        this.title = title;
-    }
-
-    public String getDescription() {
-        return description;
-    }
-
-    public void setDescription(String description) {
-        checkRequiredString(description);
-        this.description = description;
-    }
-
-    public String getVersion() {
-        return version;
-    }
-
-    public void setVersion(String version) {
-        checkRequiredString(version);
-        this.version = version;
-    }
-
-    public String getTermsOfServiceUrl() {
-        return termsOfServiceUrl;
-    }
-
-    public void setTermsOfServiceUrl(String termsOfService) {
-        checkRequiredString(termsOfService);
-        this.termsOfServiceUrl = termsOfService;
-    }
-
-    public String getContactName() {
-        return contactName;
-    }
-
-    public void setContactName(String contactName) {
-        checkRequiredString(contactName);
-        this.contactName = contactName;
-    }
-
-    public String getContactUrl() {
-        return contactUrl;
-    }
-
-    public void setContactUrl(String contactUrl) {
-        checkRequiredString(contactUrl);
-        this.contactUrl = contactUrl;
-    }
-
-    public String getContactEmail() {
-        return contactEmail;
-    }
-
-    public void setContactEmail(String contactEmail) {
-        checkRequiredString(contactEmail);
-        this.contactEmail = contactEmail;
-    }
-
-    public String getLicence() {
-        return licence;
-    }
-
-    public void setLicence(String licence) {
-        checkRequiredString(licence);
-        this.licence = licence;
-    }
-
-    public String getLicenceUrl() {
-        return licenceUrl;
-    }
-
-    public void setLicenceUrl(String licenceUrl) {
-        checkRequiredString(licenceUrl);
-        this.licenceUrl = licenceUrl;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        checkRequiredString(name);
-        this.name = name;
-    }
-
-    @Override
-    public String toString() {
-        return "ApplicationInfoProperties{" +
-                "name='" + name + '\'' +
-                ", environment='" + environment + '\'' +
-                ", title='" + title + '\'' +
-                ", description='" + description + '\'' +
-                ", version='" + version + '\'' +
-                ", termsOfServiceUrl='" + termsOfServiceUrl + '\'' +
-                ", contactName='" + contactName + '\'' +
-                ", contactUrl='" + contactUrl + '\'' +
-                ", contactEmail='" + contactEmail + '\'' +
-                ", licence='" + licence + '\'' +
-                ", licenceUrl='" + licenceUrl + '\'' +
-                '}';
-    }
-
-    private void checkRequiredString(String value){
-        if(value == null){
-            throw new IllegalStateException("Configuration files not properly set");
-        }
+        this.environment = Environment.getEnvoirment(environment);
     }
 }

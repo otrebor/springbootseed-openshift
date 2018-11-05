@@ -1,9 +1,9 @@
-package com.company.example.springbootseed.errorhandling.utilities.implementation;
+package com.company.example.springbootseed.core.errorhandling.utilities.implementation;
 
-import com.company.example.springbootseed.errorhandling.domain.ApiError;
-import com.company.example.springbootseed.errorhandling.domain.ApiSubError;
-import com.company.example.springbootseed.errorhandling.domain.RequestNotReadableApiSubError;
-import com.company.example.springbootseed.errorhandling.utilities.IHttpMessageNotReadableExceptionToApiErrorConverter;
+import com.company.example.springbootseed.core.errorhandling.domain.ApiError;
+import com.company.example.springbootseed.core.errorhandling.domain.ApiSubError;
+import com.company.example.springbootseed.core.errorhandling.domain.RequestNotReadableApiSubError;
+import com.company.example.springbootseed.core.errorhandling.utilities.IHttpMessageNotReadableExceptionToApiErrorConverter;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.PropertySource;
