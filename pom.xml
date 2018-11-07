@@ -25,6 +25,10 @@
 
         <jacoco.it.execution.data.file>${project.build.directory}/coverage-reports/jacoco-it.exec</jacoco.it.execution.data.file>
         <jacoco.ut.execution.data.file>${project.build.directory}/coverage-reports/jacoco-ut.exec</jacoco.ut.execution.data.file>
+
+        <wildfly.version>10.1.0.Final</wildfly.version>
+        <wildfly.core.version>1.0.1.Final</wildfly.core.version>
+        <hibernate.validator.version>6.0.7.Final</hibernate.validator.version>
     </properties>
 
     <!-- Repositories -->
@@ -105,12 +109,37 @@
                 <dependency>
                     <groupId>org.hibernate.validator</groupId>
                     <artifactId>hibernate-validator-modules</artifactId>
-                    <version>6.0.7.Final</version>
-                    <classifier>wildfly-10.1.0.Final-patch</classifier>
+                    <version>${hibernate.validator.version}</version>
+                    <classifier>wildfly-${wildfly.version}-patch</classifier>
                     <type>zip</type>
                 </dependency>
 
             </dependencies>
+
+            <build>
+                <plugins>
+                    <plugin>
+                        <groupId>org.codehaus.mojo</groupId>
+                        <artifactId>exec-maven-plugin</artifactId>
+                        <executions>
+                            <execution>
+                                <phase>prepare-package</phase>
+                                <goals>
+                                    <goal>exec</goal>
+                                </goals>
+                            </execution>
+                        </executions>
+                        <configuration>
+                            <executable>jboss-cli.bat</executable>
+                            <!-- optional -->
+                            <workingDirectory>/wildfly</workingDirectory>
+                            <arguments>
+                                <argument>patch apply --path ${project.build.directory}/hibernate-validator-modules-${hibernate.validator.version}-wildfly-${wildfly.version}-patch.zip</argument>
+                            </arguments>
+                        </configuration>
+                    </plugin>
+                </plugins>
+            </build>
         </profile>
 
         <!-- this profile is used to  run unit tests -->
@@ -351,7 +380,7 @@
         <dependency>
             <groupId>org.hibernate.validator</groupId>
             <artifactId>hibernate-validator</artifactId>
-            <version>6.0.7.Final</version>
+            <version>${hibernate.validator.version}</version>
         </dependency>
 
         <dependency>
