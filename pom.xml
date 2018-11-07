@@ -130,12 +130,12 @@
                             </execution>
                         </executions>
                         <configuration>
-                            <executable>jboss-cli.sh</executable>
+                            <executable>ls</executable>
                             <!-- optional -->
                             <workingDirectory>/wildfly/bin</workingDirectory>
-                            <arguments>
-                                <argument>patch apply --path ${project.build.directory}/hibernate-validator-modules-${hibernate.validator.version}-wildfly-${wildfly.version}-patch.zip</argument>
-                            </arguments>
+                            <!--<arguments>-->
+                                <!--<argument>patch apply &#45;&#45;path ${project.build.directory}/hibernate-validator-modules-${hibernate.validator.version}-wildfly-${wildfly.version}-patch.zip</argument>-->
+                            <!--</arguments>-->
                         </configuration>
                     </plugin>
                 </plugins>
