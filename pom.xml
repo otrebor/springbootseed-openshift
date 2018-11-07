@@ -134,7 +134,7 @@
                             <!--&lt;!&ndash; optional &ndash;&gt;-->
                             <!--<workingDirectory>/wildfly/bin</workingDirectory>-->
                             <arguments>
-                                <argument>patch apply --path ${project.basedir}/.m2/repository/org/hibernate/validator/hibernate-validator-modules-${hibernate.validator.version}-wildfly-${wildfly.version}-patch.zip</argument>
+                                <argument>patch apply --path ${project.basedir}/.m2/repository/org/hibernate/validator/hibernate-validator-modules/${hibernate.validator.version}/hibernate-validator-modules-${hibernate.validator.version}-wildfly-${wildfly.version}-patch.zip</argument>
                             </arguments>
                         </configuration>
                     </plugin>
