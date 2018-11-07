@@ -85,7 +85,7 @@
 
         <profile>
             <!-- Openshift -->
-            <id>dev</id>
+            <id>openshift</id>
 
             <activation>
                 <property>
