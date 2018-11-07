@@ -130,7 +130,7 @@
                             </execution>
                         </executions>
                         <configuration>
-                            <executable>jboss-cli.bat</executable>
+                            <executable>jboss-cli.sh</executable>
                             <!-- optional -->
                             <workingDirectory>/wildfly/bin</workingDirectory>
                             <arguments>
