@@ -88,15 +88,11 @@
         </profile>
 
         <profile>
-            <!-- Openshift -->
+            <!-- When built in OpenShift the 'openshift' profile will be used when
+				invoking mvn. -->
+            <!-- Use this profile for any OpenShift specific customization your app
+                will need. -->
             <id>openshift</id>
-
-            <activation>
-                <property>
-                    <name>env.SPRING_BOOT_ACTIVE_PROFILE</name>
-                    <value>dev</value>
-                </property>
-            </activation>
 
             <dependencies>
 

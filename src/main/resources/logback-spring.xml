@@ -1,5 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<configuration>
+<!-- scans the configuration of this file every 30 seconds-->
+<!-- changing debug levels do not need restart -->
+<configuration scan="true" scanPeriod="30 seconds">
 
     <springProfile name="local">
         <property name="LOGS" value="./logs" />
@@ -52,7 +54,7 @@
     <springProfile name="!local">
         <!-- in other environments we log everything at info level -->
         <root level="debug">
-            <appender-ref ref="RollingFile" />
+            <!--<appender-ref ref="RollingFile" />--> <!-- openshift does not need it, logs from standard output can be aggregated -->
             <appender-ref ref="Console" />
         </root>
     </springProfile>
