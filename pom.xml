@@ -106,6 +106,10 @@
                     <scope>provided</scope>
                 </dependency>
 
+                <!-- subsequent dependencies are a workaround for Wildfly 10.1
+                 since it doesn't support bean validation 2.0 we need to patch
+                 the application server. the first dependency downloads the patch
+                 and the plugin executes the patching-->
                 <dependency>
                     <groupId>org.hibernate.validator</groupId>
                     <artifactId>hibernate-validator-modules</artifactId>
@@ -131,8 +135,6 @@
                         </executions>
                         <configuration>
                             <executable>/wildfly/bin/jboss-cli.sh</executable>
-                            <!--&lt;!&ndash; optional &ndash;&gt;-->
-                            <!--<workingDirectory>/wildfly/bin</workingDirectory>-->
                             <arguments>
                                 <argument>patch apply --path ${project.basedir}/.m2/repository/org/hibernate/validator/hibernate-validator-modules/${hibernate.validator.version}/hibernate-validator-modules-${hibernate.validator.version}-wildfly-${wildfly.version}-patch.zip</argument>
                             </arguments>
