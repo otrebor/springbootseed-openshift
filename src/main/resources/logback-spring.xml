@@ -3,15 +3,6 @@
 <!-- changing debug levels do not need restart -->
 <configuration scan="true" scanPeriod="30 seconds">
 
-
-    <springProfile name="local">
-        <property name="LOGS" value="./logs" />
-    </springProfile>
-
-    <springProfile name="!local">
-        <property name="LOGS" value="/tmp/logs-spring-boot" />
-    </springProfile>
-
     <!-- where to log (appenders)-->
     <appender name="Console"
               class="ch.qos.logback.core.ConsoleAppender">
@@ -22,37 +13,50 @@
         </layout>
     </appender>
 
-    <appender name="RollingFile"
-              class="ch.qos.logback.core.rolling.RollingFileAppender">
-        <file>${LOGS}/spring-boot-seed-logger.log</file>
-        <encoder
-                class="ch.qos.logback.classic.encoder.PatternLayoutEncoder">
-            <Pattern>%d %p %C{1.} [%t] %m%n</Pattern>
-        </encoder>
-
-        <rollingPolicy
-                class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
-            <!-- rollover daily and when the file reaches 10 MegaBytes -->
-            <fileNamePattern>${LOGS}/archived/spring-boot-seed-logger-%d{yyyy-MM-dd}.%i.log
-            </fileNamePattern>
-            <timeBasedFileNamingAndTriggeringPolicy
-                    class="ch.qos.logback.core.rolling.SizeAndTimeBasedFNATP">
-                <maxFileSize>10MB</maxFileSize>
-            </timeBasedFileNamingAndTriggeringPolicy>
-        </rollingPolicy>
-    </appender>
 
     <!-- The <springProfile> tag lets you optionally include or exclude sections of configuration based
-on the active Spring profiles. Profile sections are supported anywhere within the <configuration> element.
-Use the name attribute to specify which profile accepts the configuration.
-Multiple profiles can be specified with a comma-separated list.
-The following listing shows three sample profiles:-->
+        on the active Spring profiles. Profile sections are supported anywhere within the <configuration> element.
+        Use the name attribute to specify which profile accepts the configuration.
+        Multiple profiles can be specified with a comma-separated list.
+        The following listing shows three sample profiles:
+    -->
     <springProfile name="local">
+
+        <property name="LOGS" value="./logs"/>
+
+        <appender name="RollingFile"
+                  class="ch.qos.logback.core.rolling.RollingFileAppender">
+            <file>${LOGS}/spring-boot-seed-logger.log</file>
+            <encoder
+                    class="ch.qos.logback.classic.encoder.PatternLayoutEncoder">
+                <Pattern>%d %p %C{1.} [%t] %m%n</Pattern>
+            </encoder>
+
+            <rollingPolicy
+                    class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+                <!-- rollover daily and when the file reaches 10 MegaBytes -->
+                <fileNamePattern>${LOGS}/archived/spring-boot-seed-logger-%d{yyyy-MM-dd}.%i.log
+                </fileNamePattern>
+                <timeBasedFileNamingAndTriggeringPolicy
+                        class="ch.qos.logback.core.rolling.SizeAndTimeBasedFNATP">
+                    <maxFileSize>10MB</maxFileSize>
+                </timeBasedFileNamingAndTriggeringPolicy>
+            </rollingPolicy>
+        </appender>
         <!-- configuration to be enabled when the "staging" profile is active -->
         <!-- in local we log everything DEBUG level-->
         <root level="debug">
-            <appender-ref ref="RollingFile" />
-            <appender-ref ref="Console" />
+            <appender-ref ref="RollingFile"/>
+            <appender-ref ref="Console"/>
+        </root>
+    </springProfile>
+
+    <springProfile name="!local">
+        <!-- configuration to be enabled when the "local" profile is not active -->
+        <!-- in other environments we log everything at info level -->
+        <root level="info">
+            <!--<appender-ref ref="RollingFile" />--> <!-- openshift does not need it, logs from standard output can be aggregated -->
+            <appender-ref ref="Console"/>
         </root>
     </springProfile>
 
@@ -62,15 +66,6 @@ The following listing shows three sample profiles:-->
 
     <springProfile name="preprod, prod">
         <!-- configuration to be enabled when the "dev" or "staging" profiles are active -->
-    </springProfile>
-
-    <springProfile name="!local">
-        <!-- configuration to be enabled when the "local" profile is not active -->
-        <!-- in other environments we log everything at info level -->
-        <root level="info">
-            <!--<appender-ref ref="RollingFile" />--> <!-- openshift does not need it, logs from standard output can be aggregated -->
-            <appender-ref ref="Console" />
-        </root>
     </springProfile>
 
 </configuration>
