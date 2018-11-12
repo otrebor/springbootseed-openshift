@@ -3,6 +3,39 @@
 <!-- changing debug levels do not need restart -->
 <configuration scan="true" scanPeriod="30 seconds">
 
+    <!-- The <springProfile> tag lets you optionally include or exclude sections of configuration based
+   on the active Spring profiles. Profile sections are supported anywhere within the <configuration> element.
+    Use the name attribute to specify which profile accepts the configuration.
+    Multiple profiles can be specified with a comma-separated list.
+    The following listing shows three sample profiles:-->
+    <springProfile name="local">
+        <property name="LOGS" value="./logs" />
+        <!-- configuration to be enabled when the "staging" profile is active -->
+        <!-- in local we log everything DEBUG level-->
+        <root level="debug">
+            <appender-ref ref="RollingFile" />
+            <appender-ref ref="Console" />
+        </root>
+    </springProfile>
+
+    <springProfile name="dev">
+        <!-- configuration to be enabled when the "dev" or "staging" profiles are active -->
+    </springProfile>
+
+    <springProfile name="preprod, prod">
+        <!-- configuration to be enabled when the "dev" or "staging" profiles are active -->
+    </springProfile>
+
+    <springProfile name="!local">
+        <property name="LOGS" value="/tmp/logs-spring-boot" />
+        <!-- configuration to be enabled when the "local" profile is not active -->
+        <!-- in other environments we log everything at info level -->
+        <root level="info">
+            <!--<appender-ref ref="RollingFile" />--> <!-- openshift does not need it, logs from standard output can be aggregated -->
+            <appender-ref ref="Console" />
+        </root>
+    </springProfile>
+
     <!-- where to log (appenders)-->
     <appender name="Console"
               class="ch.qos.logback.core.ConsoleAppender">
@@ -32,38 +65,5 @@
             </timeBasedFileNamingAndTriggeringPolicy>
         </rollingPolicy>
     </appender>
-
-    <!-- The <springProfile> tag lets you optionally include or exclude sections of configuration based
-    on the active Spring profiles. Profile sections are supported anywhere within the <configuration> element.
-     Use the name attribute to specify which profile accepts the configuration.
-     Multiple profiles can be specified with a comma-separated list.
-     The following listing shows three sample profiles:-->
-    <springProfile name="local">
-        <property name="LOGS" value="./logs" />
-        <!-- configuration to be enabled when the "staging" profile is active -->
-        <!-- in local we log everything DEBUG level-->
-        <root level="debug">
-            <appender-ref ref="RollingFile" />
-            <appender-ref ref="Console" />
-        </root>
-    </springProfile>
-
-    <springProfile name="dev">
-        <!-- configuration to be enabled when the "dev" or "staging" profiles are active -->
-    </springProfile>
-
-    <springProfile name="preprod, prod">
-        <!-- configuration to be enabled when the "dev" or "staging" profiles are active -->
-    </springProfile>
-
-    <springProfile name="!local">
-        <property name="LOGS" value="/tmp/logs-spring-boot" />
-        <!-- configuration to be enabled when the "local" profile is not active -->
-        <!-- in other environments we log everything at info level -->
-        <root level="info">
-            <!--<appender-ref ref="RollingFile" />--> <!-- openshift does not need it, logs from standard output can be aggregated -->
-            <appender-ref ref="Console" />
-        </root>
-    </springProfile>
 
 </configuration>
