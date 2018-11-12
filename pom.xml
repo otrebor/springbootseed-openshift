@@ -237,17 +237,17 @@
                     </plugin>
 
                     <!-- The WAR Plugin is responsible for collecting all artifact dependencies, classes and resources of the web application and packaging them into a web application archive. -->
-                    <plugin>
-                        <groupId>org.apache.maven.plugins</groupId>
-                        <artifactId>maven-war-plugin</artifactId>
-                        <version>2.3</version>
-                        <configuration>
-                            <failOnMissingWebXml>false</failOnMissingWebXml>
-                            <warSourceDirectory>target/site/jacoco-ut</warSourceDirectory>
-                            <outputDirectory>target</outputDirectory>
-                            <warName>jacoco-ut</warName>
-                        </configuration>
-                    </plugin>
+                    <!--<plugin>-->
+                        <!--<groupId>org.apache.maven.plugins</groupId>-->
+                        <!--<artifactId>maven-war-plugin</artifactId>-->
+                        <!--<version>2.3</version>-->
+                        <!--<configuration>-->
+                            <!--<failOnMissingWebXml>false</failOnMissingWebXml>-->
+                            <!--<warSourceDirectory>target/site/jacoco-ut</warSourceDirectory>-->
+                            <!--<outputDirectory>target</outputDirectory>-->
+                            <!--<warName>jacoco-ut</warName>-->
+                        <!--</configuration>-->
+                    <!--</plugin>-->
 
                 </plugins>
 
