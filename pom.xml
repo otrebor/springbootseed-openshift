@@ -71,7 +71,7 @@
             <activation>
                 <property>
                     <name>env.SPRING_BOOT_ACTIVE_PROFILE</name>
-                    <value>!dev</value>
+                    <value>local</value>
                 </property>
             </activation>
 
