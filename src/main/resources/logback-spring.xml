@@ -21,7 +21,7 @@
         The following listing shows three sample profiles:
     -->
     <springProfile name="local">
-
+        <!-- NB: property has to be defined before appender (Order sensitive) -->
         <property name="LOGS" value="./logs"/>
 
         <appender name="RollingFile"
