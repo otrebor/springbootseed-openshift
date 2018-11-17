@@ -25,6 +25,7 @@
 
         <jacoco.it.execution.data.file>${project.build.directory}/coverage-reports/jacoco-it.exec</jacoco.it.execution.data.file>
         <jacoco.ut.execution.data.file>${project.build.directory}/coverage-reports/jacoco-ut.exec</jacoco.ut.execution.data.file>
+        <sonar.jacoco.reportPaths>${jacoco.ut.execution.data.file} ,${jacoco.it.execution.data.file} </sonar.jacoco.reportPaths>
 
         <!--<wildfly.version>10.1.0.Final</wildfly.version>-->
         <!--<wildfly.core.version>1.0.1.Final</wildfly.core.version>-->
@@ -32,6 +33,7 @@
         <version.wildfly.maven.plugin>1.0.2.Final</version.wildfly.maven.plugin>
         <version.war.plugin>2.1.1</version.war.plugin>
         <version.sonar.maven.plugin>3.3.0.603</version.sonar.maven.plugin>
+        <version.jacoco.maven.plugin>0.8.2</version.jacoco.maven.plugin>
     </properties>
 
     <!-- Repositories -->
@@ -102,6 +104,12 @@
                 <dependency>
                     <groupId>javax.servlet</groupId>
                     <artifactId>javax.servlet-api</artifactId>
+                    <scope>provided</scope>
+                </dependency>
+
+                <dependency>
+                    <groupId>javax.servlet.jsp</groupId>
+                    <artifactId>javax.servlet.jsp-api</artifactId>
                     <scope>provided</scope>
                 </dependency>
 
@@ -198,7 +206,7 @@
                     <plugin>
                         <groupId>org.jacoco</groupId>
                         <artifactId>jacoco-maven-plugin</artifactId>
-                        <version>0.8.2</version>
+                        <version>${version.jacoco.maven.plugin}</version>
                         <executions>
                             <!--
                                 Prepares the property pointing to the JaCoCo runtime agent which
@@ -271,6 +279,23 @@
 
             </build>
 
+            <reporting>
+                <plugins>
+                    <plugin>
+                        <groupId>org.jacoco</groupId>
+                        <artifactId>jacoco-maven-plugin</artifactId>
+                        <version>${version.jacoco.maven.plugin}</version>
+                        <reportSets>
+                            <reportSet>
+                                <reports>
+                                    <report>report</report>
+                                </reports>
+                            </reportSet>
+                        </reportSets>
+                    </plugin>
+                </plugins>
+            </reporting>
+
         </profile>
 
         <!-- this profile is used to run integration tests -->
@@ -308,7 +333,7 @@
                     <plugin>
                         <groupId>org.jacoco</groupId>
                         <artifactId>jacoco-maven-plugin</artifactId>
-                        <version>0.8.2</version>
+                        <version>${version.jacoco.maven.plugin}</version>
                         <executions>
                             <!--
                                 Prepares the property pointing to the JaCoCo runtime agent which
@@ -376,6 +401,23 @@
                 </plugins>
 
             </build>
+
+            <reporting>
+                <plugins>
+                    <plugin>
+                        <groupId>org.jacoco</groupId>
+                        <artifactId>jacoco-maven-plugin</artifactId>
+                        <version>${version.jacoco.maven.plugin}</version>
+                        <reportSets>
+                            <reportSet>
+                                <reports>
+                                    <report>report</report>
+                                </reports>
+                            </reportSet>
+                        </reportSets>
+                    </plugin>
+                </plugins>
+            </reporting>
 
         </profile>
     </profiles>
