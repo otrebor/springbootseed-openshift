@@ -26,9 +26,12 @@
         <jacoco.it.execution.data.file>${project.build.directory}/coverage-reports/jacoco-it.exec</jacoco.it.execution.data.file>
         <jacoco.ut.execution.data.file>${project.build.directory}/coverage-reports/jacoco-ut.exec</jacoco.ut.execution.data.file>
 
-        <wildfly.version>10.1.0.Final</wildfly.version>
-        <wildfly.core.version>1.0.1.Final</wildfly.core.version>
+        <!--<wildfly.version>10.1.0.Final</wildfly.version>-->
+        <!--<wildfly.core.version>1.0.1.Final</wildfly.core.version>-->
         <hibernate.validator.version>6.0.7.Final</hibernate.validator.version>
+        <version.wildfly.maven.plugin>1.0.2.Final</version.wildfly.maven.plugin>
+        <version.war.plugin>2.1.1</version.war.plugin>
+        <version.sonar.maven.plugin>3.3.0.603</version.sonar.maven.plugin>
     </properties>
 
     <!-- Repositories -->
@@ -102,40 +105,61 @@
                     <scope>provided</scope>
                 </dependency>
 
-                <!-- subsequent dependencies are a workaround for Wildfly 10.1
-                 since it doesn't support bean validation 2.0 we need to patch
-                 the application server. the first dependency downloads the patch
-                 and the plugin executes the patching-->
-                <dependency>
-                    <groupId>org.hibernate.validator</groupId>
-                    <artifactId>hibernate-validator-modules</artifactId>
-                    <version>${hibernate.validator.version}</version>
-                    <classifier>wildfly-${wildfly.version}-patch</classifier>
-                    <type>zip</type>
-                </dependency>
+                <!--&lt;!&ndash; subsequent dependencies are a workaround for Wildfly 10.1-->
+                 <!--since it doesn't support bean validation 2.0 we need to patch-->
+                 <!--the application server. the first dependency downloads the patch-->
+                 <!--and the plugin executes the patching&ndash;&gt;-->
+                <!--<dependency>-->
+                    <!--<groupId>org.hibernate.validator</groupId>-->
+                    <!--<artifactId>hibernate-validator-modules</artifactId>-->
+                    <!--<version>${hibernate.validator.version}</version>-->
+                    <!--<classifier>wildfly-${wildfly.version}-patch</classifier>-->
+                    <!--<type>zip</type>-->
+                <!--</dependency>-->
 
             </dependencies>
 
             <build>
                 <plugins>
                     <plugin>
-                        <groupId>org.codehaus.mojo</groupId>
-                        <artifactId>exec-maven-plugin</artifactId>
-                        <executions>
-                            <execution>
-                                <phase>prepare-package</phase>
-                                <goals>
-                                    <goal>exec</goal>
-                                </goals>
-                            </execution>
-                        </executions>
+                        <groupId>org.sonarsource.scanner.maven</groupId>
+                        <artifactId>sonar-maven-plugin</artifactId>
+                        <version>${version.sonar.maven.plugin}</version>
+                    </plugin>
+
+                    <plugin>
+                        <groupId>org.wildfly.plugins</groupId>
+                        <artifactId>wildfly-maven-plugin</artifactId>
+                        <version>${version.wildfly.maven.plugin}</version>
+                    </plugin>
+
+                    <plugin>
+                        <artifactId>maven-war-plugin</artifactId>
+                        <version>${version.war.plugin}</version>
                         <configuration>
-                            <executable>/wildfly/bin/jboss-cli.sh</executable>
-                            <arguments>
-                                <argument>patch apply --path ${project.basedir}/.m2/repository/org/hibernate/validator/hibernate-validator-modules/${hibernate.validator.version}/hibernate-validator-modules-${hibernate.validator.version}-wildfly-${wildfly.version}-patch.zip</argument>
-                            </arguments>
+                            <!-- Java EE doesn't require web.xml, Maven needs to catch up! -->
+                            <failOnMissingWebXml>false</failOnMissingWebXml>
                         </configuration>
                     </plugin>
+
+                    <!--<plugin>-->
+                        <!--<groupId>org.codehaus.mojo</groupId>-->
+                        <!--<artifactId>exec-maven-plugin</artifactId>-->
+                        <!--<executions>-->
+                            <!--<execution>-->
+                                <!--<phase>prepare-package</phase>-->
+                                <!--<goals>-->
+                                    <!--<goal>exec</goal>-->
+                                <!--</goals>-->
+                            <!--</execution>-->
+                        <!--</executions>-->
+                        <!--<configuration>-->
+                            <!--<executable>/wildfly/bin/jboss-cli.sh</executable>-->
+                            <!--<arguments>-->
+                                <!--<argument>patch apply &#45;&#45;path ${project.basedir}/.m2/repository/org/hibernate/validator/hibernate-validator-modules/${hibernate.validator.version}/hibernate-validator-modules-${hibernate.validator.version}-wildfly-${wildfly.version}-patch.zip</argument>-->
+                            <!--</arguments>-->
+                        <!--</configuration>-->
+                    <!--</plugin>-->
                 </plugins>
             </build>
         </profile>
@@ -144,13 +168,13 @@
         <profile>
             <id>unit-tests</id>
 
-            <activation>
-                <property>
-                    <!-- TODO change the activation-->
-                    <name>env.SPRING_BOOT_ACTIVE_PROFILE</name>
-                    <value>!prod</value>
-                </property>
-            </activation>
+            <!--<activation>-->
+                <!--<property>-->
+                    <!--&lt;!&ndash; TODO change the activation&ndash;&gt;-->
+                    <!--<name>env.SPRING_PROFILES_ACTIVE</name>-->
+                    <!--<value>!prod</value>-->
+                <!--</property>-->
+            <!--</activation>-->
 
             <dependencies>
                 <dependency>
@@ -260,12 +284,12 @@
         <profile>
             <id>integration-tests</id>
 
-            <activation>
-                <property>
-                    <name>env.SPRING_BOOT_ACTIVE_PROFILE</name>
-                    <value>integration</value>
-                </property>
-            </activation>
+            <!--<activation>-->
+                <!--<property>-->
+                    <!--<name>env.SPRING_PROFILES_ACTIVE</name>-->
+                    <!--<value>integration</value>-->
+                <!--</property>-->
+            <!--</activation>-->
 
             <dependencies>
                 <dependency>
@@ -462,16 +486,9 @@
     </dependencies>
 
     <build>
-
-        <!--<pluginManagement>-->
-            <!--<plugins>-->
-                <!--<plugin>-->
-                    <!--<groupId>org.apache.maven.plugins</groupId>-->
-                    <!--<artifactId>maven-help-plugin</artifactId>-->
-                    <!--<version>3.1.0</version>-->
-                <!--</plugin>-->
-            <!--</plugins>-->
-        <!--</pluginManagement>-->
+        <!-- Maven will append the version to the finalName (which is the name
+			given to the generated war, and hence the context root) -->
+        <finalName>springbootseed-openshift</finalName>
 
         <plugins>
 
