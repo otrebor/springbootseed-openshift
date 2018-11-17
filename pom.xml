@@ -107,12 +107,6 @@
                     <scope>provided</scope>
                 </dependency>
 
-                <dependency>
-                    <groupId>javax.servlet.jsp</groupId>
-                    <artifactId>javax.servlet.jsp-api</artifactId>
-                    <scope>provided</scope>
-                </dependency>
-
                 <!--&lt;!&ndash; subsequent dependencies are a workaround for Wildfly 10.1-->
                  <!--since it doesn't support bean validation 2.0 we need to patch-->
                  <!--the application server. the first dependency downloads the patch-->
