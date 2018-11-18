@@ -31,7 +31,7 @@
         <!--<wildfly.core.version>1.0.1.Final</wildfly.core.version>-->
         <hibernate.validator.version>6.0.7.Final</hibernate.validator.version>
         <version.wildfly.maven.plugin>1.0.2.Final</version.wildfly.maven.plugin>
-        <version.war.plugin>2.1.1</version.war.plugin>
+        <version.war.plugin>3.2.2</version.war.plugin>
         <version.sonar.maven.plugin>3.3.0.603</version.sonar.maven.plugin>
         <version.jacoco.maven.plugin>0.8.2</version.jacoco.maven.plugin>
     </properties>
@@ -135,6 +135,7 @@
                         <version>${version.wildfly.maven.plugin}</version>
                     </plugin>
 
+                    <!-- The WAR Plugin is responsible for collecting all artifact dependencies, classes and resources of the web application and packaging them into a web application archive. -->
                     <plugin>
                         <artifactId>maven-war-plugin</artifactId>
                         <version>${version.war.plugin}</version>
@@ -258,19 +259,6 @@
                         </configuration>
                     </plugin>
 
-                    <!-- The WAR Plugin is responsible for collecting all artifact dependencies, classes and resources of the web application and packaging them into a web application archive. -->
-                    <!--<plugin>-->
-                        <!--<groupId>org.apache.maven.plugins</groupId>-->
-                        <!--<artifactId>maven-war-plugin</artifactId>-->
-                        <!--<version>2.3</version>-->
-                        <!--<configuration>-->
-                            <!--<failOnMissingWebXml>false</failOnMissingWebXml>-->
-                            <!--<warSourceDirectory>target/site/jacoco-ut</warSourceDirectory>-->
-                            <!--<outputDirectory>target</outputDirectory>-->
-                            <!--<warName>jacoco-ut</warName>-->
-                        <!--</configuration>-->
-                    <!--</plugin>-->
-
                 </plugins>
 
             </build>
@@ -298,13 +286,6 @@
         <!-- TODO change the activation-->
         <profile>
             <id>integration-tests</id>
-
-            <!--<activation>-->
-                <!--<property>-->
-                    <!--<name>env.SPRING_PROFILES_ACTIVE</name>-->
-                    <!--<value>integration</value>-->
-                <!--</property>-->
-            <!--</activation>-->
 
             <dependencies>
                 <dependency>
