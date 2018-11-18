@@ -141,6 +141,8 @@
                         <configuration>
                             <!-- Java EE doesn't require web.xml, Maven needs to catch up! -->
                             <failOnMissingWebXml>false</failOnMissingWebXml>
+                            <outputDirectory>deployments</outputDirectory>
+                            <warName>ROOT</warName>
                         </configuration>
                     </plugin>
 
@@ -414,6 +416,24 @@
             </reporting>
 
         </profile>
+
+        <!-- this profile is used to publish artifacts on nexus -->
+        <profile>
+            <id>nexus3</id>
+            <distributionManagement>
+                <repository>
+                    <id>nexus3</id>
+                    <name>Releases</name>
+                    <url>http://nexus:8081/repository/maven-releases</url>
+                </repository>
+                <snapshotRepository>
+                    <id>nexus3</id>
+                    <name>Snapshot</name>
+                    <url>http://nexus:8081/repository/maven-snapshots</url>
+                </snapshotRepository>
+            </distributionManagement>
+        </profile>
+
     </profiles>
 
 
