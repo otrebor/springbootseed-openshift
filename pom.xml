@@ -104,20 +104,9 @@
                 <dependency>
                     <groupId>javax.servlet</groupId>
                     <artifactId>javax.servlet-api</artifactId>
+                    <version>3.0.1</version>
                     <scope>provided</scope>
                 </dependency>
-
-                <!--&lt;!&ndash; subsequent dependencies are a workaround for Wildfly 10.1-->
-                 <!--since it doesn't support bean validation 2.0 we need to patch-->
-                 <!--the application server. the first dependency downloads the patch-->
-                 <!--and the plugin executes the patching&ndash;&gt;-->
-                <!--<dependency>-->
-                    <!--<groupId>org.hibernate.validator</groupId>-->
-                    <!--<artifactId>hibernate-validator-modules</artifactId>-->
-                    <!--<version>${hibernate.validator.version}</version>-->
-                    <!--<classifier>wildfly-${wildfly.version}-patch</classifier>-->
-                    <!--<type>zip</type>-->
-                <!--</dependency>-->
 
             </dependencies>
 
@@ -147,24 +136,6 @@
                         </configuration>
                     </plugin>
 
-                    <!--<plugin>-->
-                        <!--<groupId>org.codehaus.mojo</groupId>-->
-                        <!--<artifactId>exec-maven-plugin</artifactId>-->
-                        <!--<executions>-->
-                            <!--<execution>-->
-                                <!--<phase>prepare-package</phase>-->
-                                <!--<goals>-->
-                                    <!--<goal>exec</goal>-->
-                                <!--</goals>-->
-                            <!--</execution>-->
-                        <!--</executions>-->
-                        <!--<configuration>-->
-                            <!--<executable>/wildfly/bin/jboss-cli.sh</executable>-->
-                            <!--<arguments>-->
-                                <!--<argument>patch apply &#45;&#45;path ${project.basedir}/.m2/repository/org/hibernate/validator/hibernate-validator-modules/${hibernate.validator.version}/hibernate-validator-modules-${hibernate.validator.version}-wildfly-${wildfly.version}-patch.zip</argument>-->
-                            <!--</arguments>-->
-                        <!--</configuration>-->
-                    <!--</plugin>-->
                 </plugins>
             </build>
         </profile>
@@ -172,14 +143,6 @@
         <!-- this profile is used to  run unit tests -->
         <profile>
             <id>unit-tests</id>
-
-            <!--<activation>-->
-                <!--<property>-->
-                    <!--&lt;!&ndash; TODO change the activation&ndash;&gt;-->
-                    <!--<name>env.SPRING_PROFILES_ACTIVE</name>-->
-                    <!--<value>!prod</value>-->
-                <!--</property>-->
-            <!--</activation>-->
 
             <dependencies>
                 <dependency>
@@ -416,8 +379,6 @@
         </profile>
 
     </profiles>
-
-
 
     <!-- common dependencies -->
     <dependencies>

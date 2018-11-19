@@ -7,7 +7,8 @@ public enum Environment {
     Local ("local"), // local (devs computer)
     Dev ("dev"),
     Integration ("integration"),
-    Production ("production");
+    PreProduction ("preprod"),
+    Production ("prod");
 
     private final String value;
 
