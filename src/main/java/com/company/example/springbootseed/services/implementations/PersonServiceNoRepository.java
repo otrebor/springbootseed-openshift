@@ -1,6 +1,8 @@
-package com.company.example.springbootseed.services;
+package com.company.example.springbootseed.services.implementations;
 
+import com.company.example.springbootseed.core.errorhandling.exceptions.ResourceNotFoundException;
 import com.company.example.springbootseed.domain.Person;
+import com.company.example.springbootseed.services.IPersonService;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.PostConstruct;
@@ -9,7 +11,7 @@ import java.util.List;
 import java.util.OptionalInt;
 
 @Service
-public class PersonService {
+public class PersonServiceNoRepository implements IPersonService {
 
     private List<Person> persons;
 
@@ -36,7 +38,7 @@ public class PersonService {
                 .stream()
                 .filter(person -> person.getId() == id)
                 .findFirst()
-                .orElse(null);
+                .orElseThrow(() -> new ResourceNotFoundException(String.format("Person with id %d not found", id)));
     }
 
     public Person createPerson(Person person) {
@@ -55,5 +57,6 @@ public class PersonService {
                 return;
             }
         }
+        throw new ResourceNotFoundException(String.format("Person with id %d not found", id));
     }
 }

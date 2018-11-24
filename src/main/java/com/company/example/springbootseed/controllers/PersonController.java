@@ -1,8 +1,7 @@
 package com.company.example.springbootseed.controllers;
 
-import com.company.example.springbootseed.controllers.annotations.MethodWith201;
 import com.company.example.springbootseed.domain.Person;
-import com.company.example.springbootseed.services.PersonService;
+import com.company.example.springbootseed.services.IPersonService;
 import io.swagger.annotations.*;
 import lombok.EqualsAndHashCode;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,7 +24,7 @@ import java.util.List;
 @EqualsAndHashCode // generates equals and hash code
 public class PersonController {
 
-    private PersonService personService;
+    private IPersonService personService;
 
     @RequestMapping(method = RequestMethod.GET, produces = "application/json")
     @ApiOperation("${controllers.personcontroller.getallpersons.description}")
@@ -68,7 +67,7 @@ public class PersonController {
     }
 
     @Autowired
-    public void setPersonService(PersonService personService) {
+    public void setPersonService(IPersonService personService) {
         this.personService = personService;
     }
 }
