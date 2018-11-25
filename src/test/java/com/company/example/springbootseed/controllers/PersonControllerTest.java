@@ -1,17 +1,20 @@
 package com.company.example.springbootseed.controllers;
 
 import com.company.example.springbootseed.Application;
+import com.company.example.springbootseed.core.errorhandling.domain.ApiError;
 import com.company.example.springbootseed.core.errorhandling.exceptions.ResourceNotFoundException;
 import com.company.example.springbootseed.domain.Person;
 import com.company.example.springbootseed.services.IPersonService;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 import org.hamcrest.Matchers;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringRunner;
@@ -37,6 +40,9 @@ public class PersonControllerTest {
 
     @Autowired
     private MockMvc mockMvc;
+
+    @Autowired
+    private ObjectMapper mapper;
 
     // MockBean is the annotation provided by Spring that wraps mockito one
     // Annotation that can be used to add mocks to a Spring ApplicationContext.
@@ -221,6 +227,70 @@ public class PersonControllerTest {
 
         //verify the service is invoked
         verify(service, times(1)).createPerson(inputPerson);
+
+    }
+
+    @Test
+    public void shouldReturnBadFormat() throws Exception {
+        String requestJson = "{\"id\":1,\"firstName\":\"firstName1\",\"lastName\":\"lastName11\",\"age\":21";
+        // last bracket missing
+        // setup
+
+        MockHttpServletRequestBuilder request = MockMvcRequestBuilders.post(URL_TO_TEST)
+                .contentType(MediaType.APPLICATION_JSON_UTF8)
+                .content(requestJson);
+
+        // execute
+        ResultActions action = this.mockMvc.perform(request);
+
+        //print
+        action.andDo(print()); // Print MvcResult details to the "standard" output stream.
+
+        //check headers
+        action.andExpect(MockMvcResultMatchers.status().isBadRequest())
+                .andExpect(MockMvcResultMatchers.content().contentType(MediaType.APPLICATION_JSON_UTF8_VALUE));
+
+        // check return error
+        action.andExpect(MockMvcResultMatchers.jsonPath("$.status", Matchers.is("BAD_REQUEST")))
+                .andExpect(MockMvcResultMatchers.jsonPath("$.timestamp", Matchers.notNullValue()));
+
+        //verify the service is invoked
+        verify(service, times(0)).createPerson(any());
+
+    }
+
+    @Test
+    public void shouldFailValidationAndReturnBadFormat() throws Exception {
+        String requestJson = "{\"id\":1,\"lastName\":\"\",\"age\":101}";
+        // last bracket missing
+        // setup
+
+        MockHttpServletRequestBuilder request = MockMvcRequestBuilders.post(URL_TO_TEST)
+                .contentType(MediaType.APPLICATION_JSON_UTF8)
+                .content(requestJson);
+
+        // execute
+        ResultActions action = this.mockMvc.perform(request);
+
+        //print
+        action.andDo(print()); // Print MvcResult details to the "standard" output stream.
+
+        //check headers
+        action.andExpect(MockMvcResultMatchers.status().isBadRequest())
+                .andExpect(MockMvcResultMatchers.content().contentType(MediaType.APPLICATION_JSON_UTF8_VALUE));
+
+        // check return error
+        action.andExpect(MockMvcResultMatchers.jsonPath("$.status", Matchers.is("BAD_REQUEST")))
+                .andExpect(MockMvcResultMatchers.jsonPath("$.timestamp", Matchers.notNullValue()))
+                .andExpect(MockMvcResultMatchers.jsonPath("$.subErrors", Matchers.hasSize(3)))
+                .andExpect(MockMvcResultMatchers.jsonPath("$.subErrors[*].object", Matchers.containsInAnyOrder("person", "person", "person")))
+                .andExpect(MockMvcResultMatchers.jsonPath("$.subErrors[*].field", Matchers.containsInAnyOrder("age", "firstName", "lastName")))
+                .andExpect(MockMvcResultMatchers.jsonPath("$.subErrors[?(@.field==\"age\")].rejectedValue",Matchers.contains(101)))
+                .andExpect(MockMvcResultMatchers.jsonPath("$.subErrors[?(@.field==\"firstName\")].rejectedValue",Matchers.contains(Matchers.isEmptyOrNullString())))
+                .andExpect(MockMvcResultMatchers.jsonPath("$.subErrors[?(@.field==\"lastName\")].rejectedValue",Matchers.contains(Matchers.isEmptyString())));
+
+        //verify the service is invoked
+        verify(service, times(0)).createPerson(any());
 
     }
 

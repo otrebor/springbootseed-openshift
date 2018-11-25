@@ -18,8 +18,8 @@ public class ApiError {
     private static final Logger logger = LoggerFactory.getLogger(ApiError.class);
     @Getter(AccessLevel.PUBLIC) // getter necessary for serialization
     private HttpStatus status;
-    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "dd-MM-yyyy hh:mm:ss")
-    private LocalDateTime timestamp;
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd HH:mm:ss")
+    @Getter() private LocalDateTime timestamp;
     @Getter() private String message;
     private String debugMessage;
     @Getter @Setter() private Collection<? extends ApiSubError> subErrors;
